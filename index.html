@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn Design - Standard Library</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&family=Kantumruy+Pro:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-content">
+            <div class="brand-identity">
+                <h1 class="logo-text">Learn <span>design</span></h1>
+            </div>
+            <div class="header-action">
+                <button id="adminBtn" class="create-post-btn" style="display: none;" onclick="openModal()">
+                    <span class="btn-icon">+</span> Create Post
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="sticky-nav">
+        <div class="nav-wrapper">
+            <ul class="category-menu">
+                <li class="active" onclick="filterNews('All', this)"><a href="#">All Assets</a></li>
+                <li onclick="filterNews('Adobe photoshop', this)"><a href="#">Photoshop</a></li>
+                <li onclick="filterNews('Adobe Lightroom', this)"><a href="#">Lightroom</a></li>
+                <li onclick="filterNews('Adobe Illustrator', this)"><a href="#">Illustrator</a></li>
+                <li onclick="filterNews('Adobe Premiere Pro', this)"><a href="#">Premiere</a></li>
+                <li onclick="filterNews('Adobe After Effects', this)"><a href="#">After Effects</a></li>
+            </ul>
+            <div class="modern-search">
+                <input type="text" id="searchInput" placeholder="Search resources..." onkeyup="searchNews()">
+                <button class="search-trigger">🔍</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="news-grid-system" id="newsContainer"></main>
+
+    <div id="uploadModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Post New Content</h3>
+                <span class="close-icon" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label>Category</label>
+                    <select id="categoryInput">
+                        <option value="Adobe photoshop">Adobe photoshop</option>
+                        <option value="Adobe Illustrator">Adobe Illustrator</option>
+                        <option value="Adobe Premiere Pro">Adobe Premiere Pro</option>
+                        <option value="Adobe After Effects">Adobe After Effects</option>
+                        <option value="Adobe Lightroom">Adobe Lightroom</option>
+                    </select>
+                </div>
+                <div class="file-upload-wrapper">
+                    <label for="imageInput" class="modern-file-label">
+                        <span class="upload-icon">📷</span>
+                        <p id="file-name-display">Select Image</p>
+                    </label>
+                    <input type="file" id="imageInput" accept="image/*" onchange="updateFileName()" hidden>
+                </div>
+                <div class="input-group">
+                    <label>Title</label>
+                    <input type="text" id="titleInput" placeholder="Enter title...">
+                </div>
+                <div class="input-group">
+                    <label>Description & Links</label>
+                    <textarea id="descriptionInput" rows="4" placeholder="Paste links here..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="addNewContent()" class="btn-confirm">Publish</button>
+                <button onclick="closeModal()" class="btn-cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="detailModal" class="modal" onclick="closeDetailModal()">
+        <div class="modal-content detail-view" onclick="event.stopPropagation()">
+            <span class="close-icon-detail" onclick="closeDetailModal()">&times;</span>
+            <img id="detailImage" src="">
+            <div class="detail-info-area">
+                <h2 id="detailTitle"></h2>
+                <hr>
+                <p id="detailDescription"></p>
+                <div class="action-buttons">
+                    <button onclick="copyToClipboard()" id="copyBtn" class="btn-copy">Copy Text</button>
+                    <button id="deleteBtn" class="btn-delete" style="display:none;" onclick="deleteItem()">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer style="padding: 50px; text-align: center; opacity: 0.3;">
+        <span onclick="adminLogin()" style="cursor:pointer; font-size: 11px; color: #888;">Admin Access</span>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
