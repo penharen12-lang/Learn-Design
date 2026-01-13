@@ -72,3 +72,282 @@ body { background-color: #f8f9fa; color: #212529; }
     .category-menu { order: 2; }
     .modern-search-container { order: 1; }
 }
+/* ការតុបតែង Modal រួម */
+.modal-content {
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 30px;
+    width: 90%;
+    max-width: 550px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    border: none;
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+/* ចលនាពេលបើក Modal */
+@keyframes modalFadeIn {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* បឋមកថា Modal */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.modal-header h3 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #1d1d1f;
+    margin: 0;
+}
+
+/* ការរៀបចំប្រឡោះបញ្ចូលទិន្នន័យ */
+.input-group {
+    margin-bottom: 18px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #86868b;
+    margin-bottom: 8px;
+    margin-left: 5px;
+}
+
+.modern-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1.5px solid #e5e5e7;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.2s;
+    box-sizing: border-box; /* ការពារកុំឱ្យលើសទំហំ */
+}
+
+.modern-input:focus {
+    outline: none;
+    border-color: #0071e3;
+    box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.1);
+}
+
+/* ប៊ូតុង Publish */
+.btn-confirm {
+    width: 100%;
+    padding: 14px;
+    background-color: #0071e3;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 10px;
+}
+
+.btn-confirm:hover {
+    background-color: #0077ed;
+    box-shadow: 0 4px 12px rgba(0, 113, 227, 0.3);
+}
+
+/* ប៊ូតុងបិទ (X) */
+.close-icon {
+    font-size: 24px;
+    color: #86868b;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-icon:hover {
+    color: #1d1d1f;
+}
+
+/* សម្រាប់ Layout ជាពីរជួរលើ Desktop */
+.input-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.card-footer-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #f1f1f1;
+}
+
+.post-date {
+    font-size: 11px;
+    color: #999;
+}
+
+.view-count {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* ចន្លោះរវាង Icon និងលេខ */
+    background: rgba(0, 0, 0, 0.04); /* ពណ៌ផ្ទៃក្រោយស្រាលបំផុត */
+    padding: 3px 10px;
+    border-radius: 20px; /* ធ្វើឱ្យរាងមូលទ្រវែងស្អាត */
+    transition: all 0.3s ease;
+}
+
+.view-count:hover {
+    background: rgba(0, 0, 0, 0.08);
+}
+
+.count-num {
+    font-size: 12px;
+    font-weight: 600;
+    color: #515154; /* ពណ៌ប្រផេះចាស់ បែប Minimal */
+    font-family: 'Inter', sans-serif;
+}
+
+/* រៀបចំឱ្យផ្នែក Meta នៅខាងក្រោមឱ្យកាន់តែមានរបៀប */
+.card-footer-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.post-date {
+    font-size: 11px;
+    color: #a1a1a6;
+    letter-spacing: -0.2px;
+}
+
+.view-icon {
+    font-size: 12px;
+}
+
+.count-num {
+    font-size: 12px;
+    font-weight: bold;
+    color: #333;
+}
+/* ការរៀបចំប្លង់ប៊ូតុង */
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #f0f0f2;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Style សម្រាប់ប៊ូតុង Copy (ពណ៌ខៀវស្រាលបែប Modern) */
+.btn-copy-modern {
+    background-color: #0071e3;
+    color: white;
+}
+
+.btn-copy-modern:hover {
+    background-color: #0077ed;
+    box-shadow: 0 4px 12px rgba(0, 113, 227, 0.2);
+}
+
+/* Style សម្រាប់ប៊ូតុង Delete (ពណ៌ក្រហមស្រាលបែប Minimal) */
+.btn-delete-modern {
+    background-color: #fff1f0;
+    color: #ff4d4f;
+    border: 1px solid #ffccc7;
+}
+
+.btn-delete-modern:hover {
+    background-color: #ff4d4f;
+    color: white;
+}
+
+/* រៀបចំតំណភ្ជាប់ Link ឱ្យមើលទៅស្អាត */
+#detailDescription {
+    color: #424245;
+    line-height: 1.6;
+    font-size: 15px;
+    word-break: break-all; /* ការពារ Link វែងពេកធ្លាយចេញក្រៅ */
+}
+/* ការតុបតែង Link ផ្ទាល់ក្នុង Description */
+.direct-link {
+    color: #0071e3;
+    text-decoration: none;
+    font-weight: 500;
+    word-break: break-all; /* ការពារ Link វែងពេកធ្លាយចេញក្រៅ */
+    border-bottom: 1px solid rgba(0, 113, 227, 0.2);
+    transition: all 0.2s;
+}
+
+.direct-link:hover {
+    color: #005bb5;
+    border-bottom-color: #005bb5;
+    background-color: rgba(0, 113, 227, 0.05);
+}
+
+/* ប៊ូតុង Copy បែប Professional ថ្មី */
+.btn-copy {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #0071e3;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 50px; /* រាងមូលវែងស្អាត */
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(0, 113, 227, 0.15);
+}
+
+.btn-copy:hover {
+    background: #005bb5;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 113, 227, 0.25);
+}
+
+.btn-copy:active {
+    transform: translateY(0);
+}
+
+/* ប៊ូតុង Delete បែប Minimal */
+.btn-delete {
+    background: transparent;
+    color: #ff3b30;
+    border: 1px solid #ff3b30;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: all 0.2s;
+}
+
+.btn-delete:hover {
+    background: #ff3b30;
+    color: white;
+}
