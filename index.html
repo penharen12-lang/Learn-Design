@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learn Design - Standard Library</title>
+    <title>Learn Design - Online Library</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&family=Kantumruy+Pro:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 </head>
 <body>
 
@@ -58,24 +61,21 @@
                         <option value="Adobe Lightroom">Adobe Lightroom</option>
                     </select>
                 </div>
-                <div class="file-upload-wrapper">
-                    <label for="imageInput" class="modern-file-label">
-                        <span class="upload-icon">📷</span>
-                        <p id="file-name-display">Select Image</p>
-                    </label>
-                    <input type="file" id="imageInput" accept="image/*" onchange="updateFileName()" hidden>
+                <div class="input-group">
+                    <label>Image Link (URL)</label>
+                    <input type="text" id="imageUrlInput" placeholder="Paste image URL here...">
                 </div>
                 <div class="input-group">
                     <label>Title</label>
                     <input type="text" id="titleInput" placeholder="Enter title...">
                 </div>
                 <div class="input-group">
-                    <label>Description & Links</label>
-                    <textarea id="descriptionInput" rows="4" placeholder="Paste links here..."></textarea>
+                    <label>Description (Link will be extracted from here)</label>
+                    <textarea id="descriptionInput" rows="4" placeholder="Paste your link or description here..."></textarea>
                 </div>
             </div>
             <div class="modal-footer">
-                <button onclick="addNewContent()" class="btn-confirm">Publish</button>
+                <button id="publishBtn" onclick="addNewContent()" class="btn-confirm">Publish</button>
                 <button onclick="closeModal()" class="btn-cancel">Cancel</button>
             </div>
         </div>
@@ -84,14 +84,16 @@
     <div id="detailModal" class="modal" onclick="closeDetailModal()">
         <div class="modal-content detail-view" onclick="event.stopPropagation()">
             <span class="close-icon-detail" onclick="closeDetailModal()">&times;</span>
-            <img id="detailImage" src="">
+            <a id="imageLinkWrapper" target="_blank" style="display: block; cursor: pointer;">
+                <img id="detailImage" src="" style="width: 100%; border-radius: 8px;">
+            </a>
             <div class="detail-info-area">
                 <h2 id="detailTitle"></h2>
                 <hr>
                 <p id="detailDescription"></p>
                 <div class="action-buttons">
                     <button onclick="copyToClipboard()" id="copyBtn" class="btn-copy">Copy Text</button>
-                    <button id="deleteBtn" class="btn-delete" style="display:none;" onclick="deleteItem()">Delete</button>
+                    <button id="deleteBtn" class="btn-delete" style="display:none;" onclick="deleteItemWithAuth()">Delete</button>
                 </div>
             </div>
         </div>
