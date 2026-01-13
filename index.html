@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learn Design - Online Library</title>
+    <title>Learn Design - Modern Library</title>
     
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&family=Kantumruy+Pro:wght@300;500;700&display=swap" rel="stylesheet">
@@ -32,8 +32,12 @@
                 <li onclick="filterNews('Adobe Premiere Pro', this)">Premiere</li>
                 <li onclick="filterNews('Adobe After Effects', this)">After Effects</li>
             </ul>
-            <div class="modern-search">
-                <input type="text" id="searchInput" placeholder="Search..." onkeyup="searchNews()">
+            
+            <div class="modern-search-container">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" placeholder="Search resources..." onkeyup="searchNews()">
+                </div>
             </div>
         </div>
     </nav>
@@ -56,7 +60,7 @@
             </div>
             <div class="input-group">
                 <label>Image URL</label>
-                <input type="text" id="imageUrlInput" placeholder="Paste image link...">
+                <input type="text" id="imageUrlInput" placeholder="Paste image link here...">
             </div>
             <div class="input-group">
                 <label>Title</label>
@@ -64,9 +68,9 @@
             </div>
             <div class="input-group">
                 <label>Description & Link</label>
-                <textarea id="descriptionInput" rows="4" placeholder="Description..."></textarea>
+                <textarea id="descriptionInput" rows="4" placeholder="Description and download links..."></textarea>
             </div>
-            <button id="publishBtn" onclick="addNewContent()" class="btn-confirm">Publish</button>
+            <button id="publishBtn" onclick="addNewContent()" class="btn-confirm">Publish Now</button>
         </div>
     </div>
 
@@ -74,22 +78,22 @@
         <div class="modal-content" onclick="event.stopPropagation()">
             <span class="close-icon-detail" onclick="closeDetailModal()">&times;</span>
             <a id="imageLinkWrapper" target="_blank" style="display: block; cursor: pointer; margin-top: 15px;">
-                <img id="detailImage" src="" style="width: 100%; border-radius: 8px;">
+                <img id="detailImage" src="" style="width: 100%; border-radius: 10px; border: 1px solid #eee;">
             </a>
-            <div style="padding: 15px 0;">
+            <div class="detail-body">
                 <h2 id="detailTitle"></h2>
-                <hr style="margin: 15px 0; border: 0.5px solid #eee;">
-                <p id="detailDescription" style="white-space: pre-wrap;"></p>
-                <div style="margin-top: 20px;">
-                    <button onclick="copyToClipboard()" class="btn-confirm">Copy Text</button>
+                <hr class="divider">
+                <p id="detailDescription"></p>
+                <div class="modal-actions">
+                    <button onclick="copyToClipboard()" class="btn-copy">Copy Text</button>
                     <button id="deleteBtn" class="btn-delete" style="display:none;" onclick="deleteItemWithAuth()">Delete</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <footer style="padding: 40px; text-align: center; opacity: 0.5;">
-        <span onclick="adminLogin()" style="cursor:pointer; font-size: 12px;">Admin Access</span>
+    <footer class="main-footer">
+        <span onclick="adminLogin()" class="admin-link">Admin Access</span>
     </footer>
 
     <script src="script.js"></script>
