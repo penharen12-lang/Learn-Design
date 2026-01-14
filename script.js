@@ -31,33 +31,37 @@ function extractUrl(text) {
 }
 
 // បើកមើលលម្អិត បូកចំនួន View និងប្តូរ Link ក្នុង Description
-async function openDetail(title, desc, img, id, currentViews) {
+function openDetail(title, desc, img, id, currentViews) {
     currentPostId = id;
+    const foundUrl = extractUrl(desc);
     
-    // បង្ហាញទិន្នន័យមូលដ្ឋាន
     document.getElementById('detailTitle').innerText = title;
+    document.getElementById('detailDescription').innerText = desc;
     document.getElementById('detailImage').src = img;
     
-    // កែសម្រួល៖ បង្ហាញ Link ផ្ទាល់ដោយស្វ័យប្រវត្តិ (លុបអត្ថបទ "ចុចទីនេះ...")
-    const urlRegex = /(https?:\/\/[^\s]+)/g;
-    const formattedDesc = desc.replace(urlRegex, function(url) {
-        return `<a href="${url}" target="_blank" class="direct-link">${url}</a>`;
-    });
-    document.getElementById('detailDescription').innerHTML = formattedDesc;
-    
     const wrapper = document.getElementById('imageLinkWrapper');
-    const foundUrl = extractUrl(desc);
     wrapper.href = foundUrl;
-    wrapper.style.pointerEvents = (foundUrl === "#") ? "none" : "auto";
+
+    // --- ផ្នែកកែសម្រួលថ្មី៖ រាប់ចំនួនមើលតែពេលចុចលើ Link/រូបភាព ប៉ុណ្ណោះ ---
+    wrapper.onclick = function() {
+        if (foundUrl !== "#") {
+            const newViews = (currentViews || 0) + 1;
+            // Update ទៅ Firebase តែម្តង
+            database.ref('posts/' + id).update({
+                views: newViews
+            });
+        }
+    };
+    // ----------------------------------------------------------
+
+    if(foundUrl === "#") {
+        wrapper.style.pointerEvents = "none";
+    } else {
+        wrapper.style.pointerEvents = "auto";
+    }
     
-    document.getElementById('detailModal').style.display = 'block';
-    if(isAdmin) document.getElementById('deleteBtn').style.display = 'inline-block';
-
-    // បូកចំនួន View
-    const newCount = (currentViews || 0) + 1;
-    await database.ref('posts/' + id).update({ views: newCount });
+    document.getElementById('detailModal').style.display = 'flex';
 }
-
 function closeDetailModal() { document.getElementById('detailModal').style.display = 'none'; }
 function openModal() { document.getElementById('uploadModal').style.display = 'block'; }
 function closeModal() { document.getElementById('uploadModal').style.display = 'none'; }
