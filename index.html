@@ -8,6 +8,7 @@
     
     <link rel="icon" type="image/jpeg" href="image/channels4_profile.jpg">
     <link rel="apple-touch-icon" href="image/channels4_profile.jpg">
+
     <link rel="canonical" href="https://penharen12-lang.github.io/Learn-Design/">
     <meta name="description" content="Learn Design - បណ្ណាល័យធនធានសម្រាប់ Adobe Photoshop, Illustrator និងកម្មវិធីរចនាផ្សេងៗទៀត។">
     <meta name="keywords" content="Learn Design, Adobe Photoshop, Assets, Design Library">
@@ -138,7 +139,7 @@
     <script src="script.js"></script>
 </body>
 </html>
-// ១. ការកំណត់ Firebase Configuration
+// Firebase Configuration
 const firebaseConfig = {
     apiKey: "AIzaSyBVTqgg70M5bE5qMfCAIDhPnBTT7B9sRro",
     authDomain: "learndesignproject.firebaseapp.com",
@@ -149,7 +150,6 @@ const firebaseConfig = {
     databaseURL: "https://learndesignproject-default-rtdb.asia-southeast1.firebasedatabase.app/"
 };
 
-// ២. Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
@@ -157,60 +157,53 @@ let allData = [];
 let currentPostId = null;
 let isAdmin = false;
 
-// ៣. មុខងារ Admin Login
+// Admin Login
 function adminLogin() {
-    const pass = prompt("Enter Admin Password:");
-    if(pass === "ren penha09082004") {
+    if(prompt("Enter Admin Password:") === "ren penha09082004") {
         isAdmin = true;
         document.getElementById('adminBtn').style.display = 'block';
         alert("Welcome Admin!");
-        // Refresh ដើម្បីបង្ហាញប៊ូតុងលុបលើ Card បើមាន
-        displayNews(allData);
-    } else if (pass !== null) {
-        alert("Wrong Password!");
     }
 }
 
-// ៤. មុខងារទាញយក URL ចេញពី Description
 function extractUrl(text) {
     const match = text.match(/(https?:\/\/[^\s]+)/g);
     return match ? match[0] : "#";
 }
 
-// ៥. បើកមើលលម្អិត និងរាប់ចំនួន View ពេលចុច Link
-function openDetail(title, desc, img, id, currentViews) {
+// បើកមើលលម្អិត បូកចំនួន View និងប្តូរ Link ក្នុង Description
+async function openDetail(title, desc, img, id, currentViews) {
     currentPostId = id;
-    const foundUrl = extractUrl(desc);
     
+    // បង្ហាញទិន្នន័យមូលដ្ឋាន
     document.getElementById('detailTitle').innerText = title;
-    document.getElementById('detailDescription').innerText = desc;
     document.getElementById('detailImage').src = img;
     
-    const wrapper = document.getElementById('imageLinkWrapper');
-    wrapper.href = foundUrl;
-
-    // រាប់ View: កើនឡើងតែពេលចុចលើរូបភាព/Link ទៅកាន់ Video ប៉ុណ្ណោះ
-    wrapper.onclick = function() {
-        if (foundUrl !== "#") {
-            const newViews = (currentViews || 0) + 1;
-            database.ref('posts/' + id).update({ views: newViews });
-        }
-    };
-
-    // បើគ្មាន Link ទេ គឺចុចមិនចេញទេ
-    wrapper.style.pointerEvents = (foundUrl === "#") ? "none" : "auto";
-
-    // បង្ហាញប៊ូតុងលុបសម្រាប់តែ Admin
-    document.getElementById('deleteBtn').style.display = isAdmin ? 'flex' : 'none';
+    // កែសម្រួល៖ បង្ហាញ Link ផ្ទាល់ដោយស្វ័យប្រវត្តិ (លុបអត្ថបទ "ចុចទីនេះ...")
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const formattedDesc = desc.replace(urlRegex, function(url) {
+        return `<a href="${url}" target="_blank" class="direct-link">${url}</a>`;
+    });
+    document.getElementById('detailDescription').innerHTML = formattedDesc;
     
-    document.getElementById('detailModal').style.display = 'flex';
+    const wrapper = document.getElementById('imageLinkWrapper');
+    const foundUrl = extractUrl(desc);
+    wrapper.href = foundUrl;
+    wrapper.style.pointerEvents = (foundUrl === "#") ? "none" : "auto";
+    
+    document.getElementById('detailModal').style.display = 'block';
+    if(isAdmin) document.getElementById('deleteBtn').style.display = 'inline-block';
+
+    // បូកចំនួន View
+    const newCount = (currentViews || 0) + 1;
+    await database.ref('posts/' + id).update({ views: newCount });
 }
 
 function closeDetailModal() { document.getElementById('detailModal').style.display = 'none'; }
 function openModal() { document.getElementById('uploadModal').style.display = 'block'; }
 function closeModal() { document.getElementById('uploadModal').style.display = 'none'; }
 
-// ៦. បង្ហោះ Content ថ្មី
+// បង្ហោះថ្មីដោយថែមម៉ោង និងថ្ងៃខែ
 async function addNewContent() {
     const title = document.getElementById('titleInput').value;
     const category = document.getElementById('categoryInput').value;
@@ -235,31 +228,26 @@ async function addNewContent() {
 
     alert("Post added successfully!");
     closeModal();
-    // Clear Form
     document.getElementById('titleInput').value = "";
     document.getElementById('descriptionInput').value = "";
     document.getElementById('imageUrlInput').value = "";
 }
 
-// ៧. មុខងារលុប Post
 async function deleteItemWithAuth() {
     if(prompt("Confirm Admin Password to delete:") === "ren penha09082004") {
         await database.ref('posts/' + currentPostId).remove();
         alert("Deleted!");
         closeDetailModal();
-    } else {
-        alert("Action Cancelled or Wrong Password!");
     }
 }
 
-// ៨. ទាញទិន្នន័យពី Firebase
 database.ref('posts').on('value', (snap) => {
     allData = [];
     snap.forEach(c => { allData.push({ id: c.key, ...c.val() }); });
     displayNews(allData);
 });
 
-// ៩. បង្ហាញ Card លើអេក្រង់
+// បង្ហាញ Card ជាមួយ Layout ថ្មី និងរូបភ្នែកស្តើងស្អាត
 function displayNews(data) {
     const container = document.getElementById('newsContainer');
     container.innerHTML = "";
@@ -289,7 +277,6 @@ function displayNews(data) {
     });
 }
 
-// ១០. Filter និង Search
 function filterNews(cat, el) {
     document.querySelectorAll('.category-menu li').forEach(li => li.classList.remove('active'));
     el.classList.add('active');
