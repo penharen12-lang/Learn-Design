@@ -3,21 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>Learn Design</title>
     
     <link rel="icon" type="image/jpeg" href="image/channels4_profile.jpg">
     <link rel="apple-touch-icon" href="image/channels4_profile.jpg">
 
     <link rel="canonical" href="https://penharen12-lang.github.io/Learn-Design/">
-    <meta name="description" content="Learn Design - បណ្ណាល័យធនធានសម្រាប់ Adobe Photoshop, Illustrator និងកម្មវិធីរចនាផ្សេងៗទៀត។">
-    <meta name="keywords" content="Learn Design, Adobe Photoshop, Assets, Design Library">
-    
-    <meta property="og:title" content="Learn Design - Modern Library">
-    <meta property="og:description" content="ស្វែងរកធនធានរចនាដ៏សម្បូរបែបនៅទីនេះ">
-    <meta property="og:url" content="https://penharen12-lang.github.io/Learn-Design/">
-    <meta property="og:image" content="image/channels4_profile.jpg">
-
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&family=Kantumruy+Pro:wght@300;500;700&display=swap" rel="stylesheet">
     
@@ -45,7 +36,6 @@
                 <li onclick="filterNews('Adobe Premiere Pro', this)">Premiere</li>
                 <li onclick="filterNews('Adobe After Effects', this)">After Effects</li>
             </ul>
-            
             <div class="modern-search-container">
                 <div class="search-box">
                     <span class="search-icon">🔍</span>
@@ -63,7 +53,6 @@
                 <h3>Post New Content</h3>
                 <span class="close-icon" onclick="closeModal()">&times;</span>
             </div>
-            
             <div class="modal-body">
                 <div class="input-group">
                     <label>Category</label>
@@ -75,26 +64,23 @@
                         <option value="Adobe Lightroom">Adobe Lightroom</option>
                     </select>
                 </div>
-
                 <div class="input-row">
                     <div class="input-group">
                         <label>Image URL</label>
-                        <input type="text" id="imageUrlInput" class="modern-input" placeholder="Paste image link...">
+                        <input type="text" id="imageUrlInput" class="modern-input" placeholder="Paste link...">
                     </div>
                     <div class="input-group">
                         <label>Title</label>
                         <input type="text" id="titleInput" class="modern-input" placeholder="Enter title...">
                     </div>
                 </div>
-
                 <div class="input-group">
                     <label>Description & Link</label>
-                    <textarea id="descriptionInput" class="modern-input" rows="4" placeholder="Write details and paste download links here..."></textarea>
+                    <textarea id="descriptionInput" class="modern-input" rows="4" placeholder="Write details here..."></textarea>
                 </div>
             </div>
-
             <div class="modal-footer">
-                <button id="publishBtn" onclick="addNewContent()" class="btn-confirm">Publish Now</button>
+                <button onclick="addNewContent()" class="btn-confirm">Publish Now</button>
             </div>
         </div>
     </div>
@@ -110,23 +96,8 @@
                 <hr class="divider">
                 <p id="detailDescription"></p>
                 <div class="modal-actions">
-                    <button onclick="copyToClipboard()" class="btn-copy">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                        </svg>
-                        <span>Copy Description</span>
-                    </button>
-
-                    <button id="deleteBtn" class="action-btn btn-delete-modern" style="display:none;" onclick="deleteItemWithAuth()">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="3 6 5 6 21 6"></polyline>
-                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                            <line x1="10" y1="11" x2="10" y2="17"></line>
-                            <line x1="14" y1="11" x2="14" y2="17"></line>
-                        </svg>
-                        <span>Remove Post</span>
-                    </button>
+                    <button onclick="copyToClipboard()" class="btn-copy"><span>Copy Description</span></button>
+                    <button id="deleteBtn" class="action-btn btn-delete-modern" style="display:none;" onclick="deleteItemWithAuth()"><span>Remove Post</span></button>
                 </div>
             </div>
         </div>
@@ -139,397 +110,4 @@
     <script src="script.js"></script>
 </body>
 </html>
-
-            <div class="news-card" onclick="openDetail('${safeTitle}', '${safeDesc}', '${item.image}', '${item.id}', ${item.views || 0})">
-                <img src="${item.image}" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">
-                <div class="card-info">
-                    <span class="badge">${item.category}</span>
-                    <h3>${item.title}</h3>
-                    <div class="card-footer-meta">
-                        <span class="post-date">${item.date || 'New Post'}</span>
-                        <div class="view-count">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color: #86868b;">
-                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                <circle cx="12" cy="12" r="3"></circle>
-                            </svg>
-                            <span class="count-num">${item.views || 0}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-    });
-}
-
-function filterNews(cat, el) {
-    document.querySelectorAll('.category-menu li').forEach(li => li.classList.remove('active'));
-    el.classList.add('active');
-    displayNews(cat === 'All' ? allData : allData.filter(i => i.category === cat));
-}
-
-function searchNews() {
-    const t = document.getElementById('searchInput').value.toLowerCase();
-    const filtered = allData.filter(i => 
-        i.title.toLowerCase().includes(t) || 
-        i.category.toLowerCase().includes(t)
-    );
-    displayNews(filtered);
-}
-
-function copyToClipboard() {
-    const text = document.getElementById('detailDescription').innerText;
-    navigator.clipboard.writeText(text).then(() => alert("Copied to clipboard!"));
-}
-/* មូលដ្ឋានគ្រឹះ */
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Kantumruy Pro', sans-serif; }
-body { background-color: #f8f9fa; color: #212529; }
-
-/* Header */
-.main-header { background: #fff; padding: 15px 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; }
-.header-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-.logo-text { font-size: 22px; font-weight: 700; }
-.logo-text span { color: #007bff; }
-.create-post-btn { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 500; transition: 0.3s; }
-.create-post-btn:hover { background: #0056b3; }
-
-/* Navigation & Search */
-.sticky-nav { background: white; border-bottom: 1px solid #eee; position: sticky; top: 62px; z-index: 999; }
-.nav-wrapper { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; gap: 20px; }
-
-.category-menu { display: flex; list-style: none; overflow-x: auto; gap: 10px; padding-bottom: 5px; }
-.category-menu li { cursor: pointer; white-space: nowrap; font-weight: 500; color: #6c757d; padding: 8px 12px; border-radius: 20px; transition: 0.2s; }
-.category-menu li.active { background: #e7f3ff; color: #007bff; }
-
-/* រចនាប្រអប់ Search ថ្មី */
-.modern-search-container { flex-shrink: 0; }
-.search-box { 
-    display: flex; 
-    align-items: center; 
-    background: #f1f3f4; 
-    padding: 8px 15px; 
-    border-radius: 25px; 
-    border: 1px solid transparent;
-    transition: 0.3s;
-}
-.search-box:focus-within { background: #fff; border-color: #007bff; box-shadow: 0 0 8px rgba(0,123,255,0.2); }
-.search-icon { margin-right: 10px; color: #5f6368; font-size: 14px; }
-.search-box input { border: none; background: transparent; outline: none; font-size: 14px; width: 180px; }
-
-/* Grid System */
-.news-grid-system {
-    display: grid;
-    gap: 20px;
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-}
-
-/* Card Style */
-.news-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); cursor: pointer; transition: 0.3s; }
-.news-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-.news-card img { width: 100%; height: 190px; object-fit: cover; }
-.card-info { padding: 15px; }
-.badge { background: #f1f3f4; color: #5f6368; padding: 4px 10px; border-radius: 5px; font-size: 11px; font-weight: 600; text-transform: uppercase; }
-.card-info h3 { margin-top: 10px; font-size: 16px; color: #333; }
-
-/* Modal Styles */
-.modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); overflow-y: auto; }
-.modal-content { background: white; margin: 5% auto; padding: 25px; width: 92%; max-width: 600px; border-radius: 15px; }
-.divider { margin: 15px 0; border: 0; border-top: 1px solid #eee; }
-
-/* Buttons */
-.btn-confirm, .btn-copy { background: #007bff; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: 500; }
-.btn-delete { background: #ff4d4f; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; margin-left: 10px; }
-
-/* Footer */
-.main-footer { padding: 50px; text-align: center; }
-.admin-link { cursor: pointer; font-size: 12px; color: #adb5bd; transition: 0.3s; }
-.admin-link:hover { color: #007bff; }
-
-/* Mobile Adjustments */
-@media (max-width: 768px) {
-    .nav-wrapper { flex-direction: column; align-items: stretch; gap: 15px; }
-    .search-box input { width: 100%; }
-    .category-menu { order: 2; }
-    .modern-search-container { order: 1; }
-}
-/* ការតុបតែង Modal រួម */
-.modal-content {
-    background-color: #ffffff;
-    border-radius: 20px;
-    padding: 30px;
-    width: 90%;
-    max-width: 550px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-    border: none;
-    animation: modalFadeIn 0.3s ease-out;
-}
-
-/* ចលនាពេលបើក Modal */
-@keyframes modalFadeIn {
-    from { transform: translateY(-20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-
-/* បឋមកថា Modal */
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-}
-
-.modal-header h3 {
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    font-size: 1.5rem;
-    color: #1d1d1f;
-    margin: 0;
-}
-
-/* ការរៀបចំប្រឡោះបញ្ចូលទិន្នន័យ */
-.input-group {
-    margin-bottom: 18px;
-    text-align: left;
-}
-
-.input-group label {
-    display: block;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: #86868b;
-    margin-bottom: 8px;
-    margin-left: 5px;
-}
-
-.modern-input {
-    width: 100%;
-    padding: 12px 15px;
-    border: 1.5px solid #e5e5e7;
-    border-radius: 12px;
-    font-size: 1rem;
-    font-family: inherit;
-    transition: all 0.2s;
-    box-sizing: border-box; /* ការពារកុំឱ្យលើសទំហំ */
-}
-
-.modern-input:focus {
-    outline: none;
-    border-color: #0071e3;
-    box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.1);
-}
-
-/* ប៊ូតុង Publish */
-.btn-confirm {
-    width: 100%;
-    padding: 14px;
-    background-color: #0071e3;
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s;
-    margin-top: 10px;
-}
-
-.btn-confirm:hover {
-    background-color: #0077ed;
-    box-shadow: 0 4px 12px rgba(0, 113, 227, 0.3);
-}
-
-/* ប៊ូតុងបិទ (X) */
-.close-icon {
-    font-size: 24px;
-    color: #86868b;
-    cursor: pointer;
-    transition: color 0.2s;
-}
-
-.close-icon:hover {
-    color: #1d1d1f;
-}
-
-/* សម្រាប់ Layout ជាពីរជួរលើ Desktop */
-.input-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-}
-.card-footer-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 15px;
-    padding-top: 10px;
-    border-top: 1px solid #f1f1f1;
-}
-
-.post-date {
-    font-size: 11px;
-    color: #999;
-}
-
-.view-count {
-    display: flex;
-    align-items: center;
-    gap: 5px; /* ចន្លោះរវាង Icon និងលេខ */
-    background: rgba(0, 0, 0, 0.04); /* ពណ៌ផ្ទៃក្រោយស្រាលបំផុត */
-    padding: 3px 10px;
-    border-radius: 20px; /* ធ្វើឱ្យរាងមូលទ្រវែងស្អាត */
-    transition: all 0.3s ease;
-}
-
-.view-count:hover {
-    background: rgba(0, 0, 0, 0.08);
-}
-
-.count-num {
-    font-size: 12px;
-    font-weight: 600;
-    color: #515154; /* ពណ៌ប្រផេះចាស់ បែប Minimal */
-    font-family: 'Inter', sans-serif;
-}
-
-/* រៀបចំឱ្យផ្នែក Meta នៅខាងក្រោមឱ្យកាន់តែមានរបៀប */
-.card-footer-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 15px;
-    padding-top: 12px;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
-}
-
-.post-date {
-    font-size: 11px;
-    color: #a1a1a6;
-    letter-spacing: -0.2px;
-}
-
-.view-icon {
-    font-size: 12px;
-}
-
-.count-num {
-    font-size: 12px;
-    font-weight: bold;
-    color: #333;
-}
-/* ការរៀបចំប្លង់ប៊ូតុង */
-.modal-actions {
-    display: flex;
-    gap: 12px;
-    margin-top: 25px;
-    padding-top: 20px;
-    border-top: 1px solid #f0f0f2;
-}
-
-.action-btn {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 20px;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    border: 1px solid transparent;
-    font-family: 'Inter', sans-serif;
-}
-
-/* Style សម្រាប់ប៊ូតុង Copy (ពណ៌ខៀវស្រាលបែប Modern) */
-.btn-copy-modern {
-    background-color: #0071e3;
-    color: white;
-}
-
-.btn-copy-modern:hover {
-    background-color: #0077ed;
-    box-shadow: 0 4px 12px rgba(0, 113, 227, 0.2);
-}
-
-/* Style សម្រាប់ប៊ូតុង Delete (ពណ៌ក្រហមស្រាលបែប Minimal) */
-.btn-delete-modern {
-    background-color: #fff1f0;
-    color: #ff4d4f;
-    border: 1px solid #ffccc7;
-}
-
-.btn-delete-modern:hover {
-    background-color: #ff4d4f;
-    color: white;
-}
-
-/* រៀបចំតំណភ្ជាប់ Link ឱ្យមើលទៅស្អាត */
-#detailDescription {
-    color: #424245;
-    line-height: 1.6;
-    font-size: 15px;
-    word-break: break-all; /* ការពារ Link វែងពេកធ្លាយចេញក្រៅ */
-}
-/* ការតុបតែង Link ផ្ទាល់ក្នុង Description */
-.direct-link {
-    color: #0071e3;
-    text-decoration: none;
-    font-weight: 500;
-    word-break: break-all; /* ការពារ Link វែងពេកធ្លាយចេញក្រៅ */
-    border-bottom: 1px solid rgba(0, 113, 227, 0.2);
-    transition: all 0.2s;
-}
-
-.direct-link:hover {
-    color: #005bb5;
-    border-bottom-color: #005bb5;
-    background-color: rgba(0, 113, 227, 0.05);
-}
-
-/* ប៊ូតុង Copy បែប Professional ថ្មី */
-.btn-copy {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    background: #0071e3;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 50px; /* រាងមូលវែងស្អាត */
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 15px rgba(0, 113, 227, 0.15);
-}
-
-.btn-copy:hover {
-    background: #005bb5;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 113, 227, 0.25);
-}
-
-.btn-copy:active {
-    transform: translateY(0);
-}
-
-/* ប៊ូតុង Delete បែប Minimal */
-.btn-delete {
-    background: transparent;
-    color: #ff3b30;
-    border: 1px solid #ff3b30;
-    padding: 10px 20px;
-    border-radius: 50px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    margin-left: 10px;
-    transition: all 0.2s;
-}
-
-.btn-delete:hover {
-    background: #ff3b30;
-    color: white;
-}
+          
