@@ -35,6 +35,7 @@ function openDetail(title, desc, img, id, currentViews) {
     currentPostId = id;
     const foundUrl = extractUrl(desc);
     
+    // បង្ហាញទិន្នន័យក្នុង Modal
     document.getElementById('detailTitle').innerText = title;
     document.getElementById('detailDescription').innerText = desc;
     document.getElementById('detailImage').src = img;
@@ -42,24 +43,33 @@ function openDetail(title, desc, img, id, currentViews) {
     const wrapper = document.getElementById('imageLinkWrapper');
     wrapper.href = foundUrl;
 
-    // --- ផ្នែកកែសម្រួលថ្មី៖ រាប់ចំនួនមើលតែពេលចុចលើ Link/រូបភាព ប៉ុណ្ណោះ ---
+    // --- លក្ខខណ្ឌរាប់ចំនួន View: កើនឡើងតែពេលចុចលើ Link ទៅកាន់ Video ប៉ុណ្ណោះ ---
     wrapper.onclick = function() {
         if (foundUrl !== "#") {
             const newViews = (currentViews || 0) + 1;
-            // Update ទៅ Firebase តែម្តង
+            // Update ទៅ Firebase ភ្លាមៗ
             database.ref('posts/' + id).update({
                 views: newViews
             });
         }
     };
-    // ----------------------------------------------------------
 
+    // កំណត់ការចុចលើរូបភាព (បើគ្មាន Link គឺចុចមិនចេញទេ)
     if(foundUrl === "#") {
         wrapper.style.pointerEvents = "none";
     } else {
         wrapper.style.pointerEvents = "auto";
     }
+
+    // --- ផ្នែករក្សាប៊ូតុង Delete: បង្ហាញសម្រាប់តែ Admin ប៉ុណ្ណោះ ---
+    const deleteBtn = document.getElementById('deleteBtn');
+    if (isAdmin) {
+        deleteBtn.style.display = 'block'; // បង្ហាញបើជា Admin
+    } else {
+        deleteBtn.style.display = 'none';  // លាក់បើមិនមែន Admin
+    }
     
+    // បង្ហាញ Modal លម្អិត
     document.getElementById('detailModal').style.display = 'flex';
 }
 function closeDetailModal() { document.getElementById('detailModal').style.display = 'none'; }
