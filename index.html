@@ -132,7 +132,7 @@
     <script src="script.js"></script>
 </body>
 </html>
-// Firebase Configuration
+// ១. ការកំណត់ Firebase Configuration
 const firebaseConfig = {
     apiKey: "AIzaSyBVTqgg70M5bE5qMfCAIDhPnBTT7B9sRro",
     authDomain: "learndesignproject.firebaseapp.com",
@@ -143,6 +143,7 @@ const firebaseConfig = {
     databaseURL: "https://learndesignproject-default-rtdb.asia-southeast1.firebasedatabase.app/"
 };
 
+// ២. Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
@@ -150,26 +151,31 @@ let allData = [];
 let currentPostId = null;
 let isAdmin = false;
 
-// Admin Login
+// ៣. មុខងារ Admin Login
 function adminLogin() {
-    if(prompt("Enter Admin Password:") === "ren penha09082004") {
+    const pass = prompt("Enter Admin Password:");
+    if(pass === "ren penha09082004") {
         isAdmin = true;
         document.getElementById('adminBtn').style.display = 'block';
         alert("Welcome Admin!");
+        // Refresh ដើម្បីបង្ហាញប៊ូតុងលុបលើ Card បើមាន
+        displayNews(allData);
+    } else if (pass !== null) {
+        alert("Wrong Password!");
     }
 }
 
+// ៤. មុខងារទាញយក URL ចេញពី Description
 function extractUrl(text) {
     const match = text.match(/(https?:\/\/[^\s]+)/g);
     return match ? match[0] : "#";
 }
 
-// បើកមើលលម្អិត បូកចំនួន View និងប្តូរ Link ក្នុង Description
+// ៥. បើកមើលលម្អិត និងរាប់ចំនួន View ពេលចុច Link
 function openDetail(title, desc, img, id, currentViews) {
     currentPostId = id;
     const foundUrl = extractUrl(desc);
     
-    // បង្ហាញទិន្នន័យក្នុង Modal
     document.getElementById('detailTitle').innerText = title;
     document.getElementById('detailDescription').innerText = desc;
     document.getElementById('detailImage').src = img;
@@ -177,40 +183,28 @@ function openDetail(title, desc, img, id, currentViews) {
     const wrapper = document.getElementById('imageLinkWrapper');
     wrapper.href = foundUrl;
 
-    // --- លក្ខខណ្ឌរាប់ចំនួន View: កើនឡើងតែពេលចុចលើ Link ទៅកាន់ Video ប៉ុណ្ណោះ ---
+    // រាប់ View: កើនឡើងតែពេលចុចលើរូបភាព/Link ទៅកាន់ Video ប៉ុណ្ណោះ
     wrapper.onclick = function() {
         if (foundUrl !== "#") {
             const newViews = (currentViews || 0) + 1;
-            // Update ទៅ Firebase ភ្លាមៗ
-            database.ref('posts/' + id).update({
-                views: newViews
-            });
+            database.ref('posts/' + id).update({ views: newViews });
         }
     };
 
-    // កំណត់ការចុចលើរូបភាព (បើគ្មាន Link គឺចុចមិនចេញទេ)
-    if(foundUrl === "#") {
-        wrapper.style.pointerEvents = "none";
-    } else {
-        wrapper.style.pointerEvents = "auto";
-    }
+    // បើគ្មាន Link ទេ គឺចុចមិនចេញទេ
+    wrapper.style.pointerEvents = (foundUrl === "#") ? "none" : "auto";
 
-    // --- ផ្នែករក្សាប៊ូតុង Delete: បង្ហាញសម្រាប់តែ Admin ប៉ុណ្ណោះ ---
-    const deleteBtn = document.getElementById('deleteBtn');
-    if (isAdmin) {
-        deleteBtn.style.display = 'block'; // បង្ហាញបើជា Admin
-    } else {
-        deleteBtn.style.display = 'none';  // លាក់បើមិនមែន Admin
-    }
+    // បង្ហាញប៊ូតុងលុបសម្រាប់តែ Admin
+    document.getElementById('deleteBtn').style.display = isAdmin ? 'flex' : 'none';
     
-    // បង្ហាញ Modal លម្អិត
     document.getElementById('detailModal').style.display = 'flex';
 }
+
 function closeDetailModal() { document.getElementById('detailModal').style.display = 'none'; }
 function openModal() { document.getElementById('uploadModal').style.display = 'block'; }
 function closeModal() { document.getElementById('uploadModal').style.display = 'none'; }
 
-// បង្ហោះថ្មីដោយថែមម៉ោង និងថ្ងៃខែ
+// ៦. បង្ហោះ Content ថ្មី
 async function addNewContent() {
     const title = document.getElementById('titleInput').value;
     const category = document.getElementById('categoryInput').value;
@@ -235,26 +229,31 @@ async function addNewContent() {
 
     alert("Post added successfully!");
     closeModal();
+    // Clear Form
     document.getElementById('titleInput').value = "";
     document.getElementById('descriptionInput').value = "";
     document.getElementById('imageUrlInput').value = "";
 }
 
+// ៧. មុខងារលុប Post
 async function deleteItemWithAuth() {
     if(prompt("Confirm Admin Password to delete:") === "ren penha09082004") {
         await database.ref('posts/' + currentPostId).remove();
         alert("Deleted!");
         closeDetailModal();
+    } else {
+        alert("Action Cancelled or Wrong Password!");
     }
 }
 
+// ៨. ទាញទិន្នន័យពី Firebase
 database.ref('posts').on('value', (snap) => {
     allData = [];
     snap.forEach(c => { allData.push({ id: c.key, ...c.val() }); });
     displayNews(allData);
 });
 
-// បង្ហាញ Card ជាមួយ Layout ថ្មី និងរូបភ្នែកស្តើងស្អាត
+// ៩. បង្ហាញ Card លើអេក្រង់
 function displayNews(data) {
     const container = document.getElementById('newsContainer');
     container.innerHTML = "";
@@ -284,6 +283,7 @@ function displayNews(data) {
     });
 }
 
+// ១០. Filter និង Search
 function filterNews(cat, el) {
     document.querySelectorAll('.category-menu li').forEach(li => li.classList.remove('active'));
     el.classList.add('active');
